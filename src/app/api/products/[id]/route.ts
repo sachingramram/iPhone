@@ -2,21 +2,33 @@ import connectDB from "@/lib/mongodb";
 import { Product } from "@/models/Product";
 import { NextResponse } from "next/server";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+// GET one product by ID
+export async function GET(
+  req: Request,
+  context: { params: { id: string } }
+) {
   await connectDB();
-  const product = await Product.findById(params.id);
+  const product = await Product.findById(context.params.id);
   return NextResponse.json(product);
 }
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+// UPDATE a product by ID
+export async function PUT(
+  req: Request,
+  context: { params: { id: string } }
+) {
   await connectDB();
   const body = await req.json();
-  const updated = await Product.findByIdAndUpdate(params.id, body, { new: true });
+  const updated = await Product.findByIdAndUpdate(context.params.id, body, { new: true });
   return NextResponse.json(updated);
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+// DELETE a product by ID
+export async function DELETE(
+  req: Request,
+  context: { params: { id: string } }
+) {
   await connectDB();
-  await Product.findByIdAndDelete(params.id);
+  await Product.findByIdAndDelete(context.params.id);
   return NextResponse.json({ success: true });
 }
