@@ -2,21 +2,33 @@ import { NextRequest, NextResponse } from "next/server";
 import connectMongoDB from "@/lib/mongodb";
 import { Product } from "@/models/Product";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function GET(
+  _req: NextRequest,
+  context: any
+) {
   await connectMongoDB();
-  const product = await Product.findById(params.id);
+  const product = await Product.findById(context.params.id);
   return NextResponse.json(product);
 }
-
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function PUT(
+  req: NextRequest,
+  context: any
+) {
   await connectMongoDB();
-  const body = await request.json();
-  const updated = await Product.findByIdAndUpdate(params.id, body, { new: true });
+  const body = await req.json();
+  const updated = await Product.findByIdAndUpdate(context.params.id, body, {
+    new: true,
+  });
   return NextResponse.json(updated);
 }
-
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function DELETE(
+  _req: NextRequest,
+  context: any
+) {
   await connectMongoDB();
-  await Product.findByIdAndDelete(params.id);
+  await Product.findByIdAndDelete(context.params.id);
   return NextResponse.json({ success: true });
 }
