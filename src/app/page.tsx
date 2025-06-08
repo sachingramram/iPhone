@@ -212,8 +212,10 @@ export default function HomePage() {
       setCart([]);
       setShowCart(false);
     } catch (err) {
-      alert("Error purchasing some items.");
-    }
+  console.error(err);
+  // ya alert(err.message);
+  alert("Something went wrong while purchasing all items.");
+}
   }
 
   const isCartNotEmpty = cart.length > 0;

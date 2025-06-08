@@ -14,7 +14,8 @@ interface Purchase {
 }
 
 const MyOrdersPage = () => {
-  const { data: session, status } = useSession();
+  //const { data: session, status } = useSession();
+  const { status } = useSession();
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
